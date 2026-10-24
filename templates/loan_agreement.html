@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+<head>
+<meta charset="utf-8">
+<title>Loan Agreement #{{ loan_id }}</title>
+<style>
+  @page { size: A4; margin: 22mm 18mm; }
+  body { font-family: 'Amiri', 'DejaVu Serif', serif; font-size: 11pt; color: #1b1f24; }
+  h1 { font-size: 20pt; margin: 0; color: #12355b; }
+  .brand { border-bottom: 3px solid #12355b; padding-bottom: 6px; margin-bottom: 16px; }
+  .brand small { color: #5b6773; }
+  table { border-collapse: collapse; width: 100%; margin: 8px 0 14px; }
+  th, td { border: 1px solid #c9d1d9; padding: 4px 8px; text-align: left; font-size: 10pt; }
+  th { background: #eef2f6; }
+  .terms td:first-child { width: 38%; font-weight: bold; background: #f6f8fa; }
+  .num { text-align: right; }
+  .note { font-size: 9pt; color: #5b6773; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="brand"><h1>VaultIQ</h1><small>Loan Agreement / عقد قرض &middot; Reference #{{ loan_id }} &middot; {{ date }}</small></div>
+
+<h3>1. Parties</h3>
+<table class="terms">
+  <tr><td>Borrower</td><td>{{ borrower_name }}</td></tr>
+  <tr><td>National ID</td><td>{{ id_masked }}</td></tr>
+  <tr><td>Lender</td><td>VaultIQ Demo Lender (course project)</td></tr>
+</table>
+
+<h3>2. Loan terms</h3>
+<table class="terms">
+  <tr><td>Principal</td><td>{{ amount }} {{ currency }}</td></tr>
+  <tr><td>Duration</td><td>{{ months }} months</td></tr>
+  <tr><td>Annual interest rate</td><td>{{ rate }}%</td></tr>
+  <tr><td>Monthly instalment</td><td>{{ payment }} {{ currency }}</td></tr>
+  <tr><td>Declared purpose</td><td>{{ purpose }}</td></tr>
+</table>
+
+<h3>3. Repayment schedule</h3>
+<table>
+  <tr><th>#</th><th class="num">Instalment</th><th class="num">Interest</th><th class="num">Principal</th><th class="num">Balance</th></tr>
+  {% for r in schedule %}
+  <tr><td>{{ r.n }}</td><td class="num">{{ r.payment }}</td><td class="num">{{ r.interest }}</td><td class="num">{{ r.principal }}</td><td class="num">{{ r.balance }}</td></tr>
+  {% endfor %}
+</table>
+
+<p class="note">This document is electronically signed (PAdES). The signature, certificate chain and
+timestamp can be verified with any PAdES-aware reader or the VaultIQ compliance dashboard.
+Demonstration document produced by a course project; not a legally binding qualified signature.</p>
+</body>
+</html>
